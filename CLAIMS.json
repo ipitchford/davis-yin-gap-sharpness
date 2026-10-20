@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "claims": [
+    {"id":"DYS-1","statement":"For the open step-size range, the displayed two Davis–Yin comparison-gap coefficients are exact.","evidence":["paper.tex: thm:main and prop:identity"],"scope":"Arbitrary admissible comparison pairs in the stated ordering."},
+    {"id":"DYS-2","statement":"Both open-range constants are exact suprema already in dimension two with finite nonnegative functions.","evidence":["paper.tex: explicit family and limiting calculation"],"scope":"The supremum may require an unbounded family parameter."},
+    {"id":"DYS-3","statement":"One step can attain equality and no positive-denominator finite-dimensional instance does so for K at least two.","evidence":["paper.tex: thm:attainment"],"scope":"Open step-size range."},
+    {"id":"DYS-4","statement":"The suprema persist under smooth strongly convex approximation without uniform conditioning.","evidence":["paper.tex: cor:smooth"],"scope":"No common lower bound on strong-convexity moduli."},
+    {"id":"DYS-5","statement":"At alpha L equal to two and K at least two, the exact endpoint denominators use K minus one.","evidence":["paper.tex: prop:endpoint"],"scope":"General endpoint attainment unresolved; strictly convex f is non-attaining."},
+    {"id":"DYS-6","statement":"The finite exact formulas replay identically in ordinary and optimized Python.","evidence":["code/replay.py","results/davis_yin_exact.json"],"scope":"Finite support only; the analytic proof is controlling."}
+  ]
+}

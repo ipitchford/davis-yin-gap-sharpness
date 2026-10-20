@@ -1,0 +1,401 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=Plum,citecolor=Plum,urlcolor=Plum,breaklinks=true]{hyperref}
+\hypersetup{pdftitle={Exact finite-horizon gap constants and non-attainment for Davis-Yin splitting},pdfauthor={Anonymous},pdfsubject={Unrefereed mathematical research; 20 October 2026}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small Exact constants for Davis--Yin splitting}\fancyhead[R]{\small 20 October 2026}\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=3pt,topsep=4pt}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\prox}{prox}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\R}{\mathbb R}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\title{Exact finite-horizon gap constants and non-attainment\protect\\for Davis--Yin splitting}
+\author{Anonymous}
+\date{Research manuscript \textbullet\ 20 October 2026}
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+\begin{abstract}
+For the standard Davis--Yin ordering, we determine the exact worst-case coefficient of an averaged primal--dual comparison gap throughout the unrelaxed step-size range $0<\alpha L<2$. After $K$ iterations the sharp denominator is $\alpha(K+1-\alpha L)$ when the initial error is measured by the sum of the squared primal and scaled dual distances; in the distinct natural splitting metric the exact coefficient is half as large. An exact decomposition into convexity slacks, variances and squares proves the bounds. A two-dimensional family of finite nonnegative convex functions approaches both and resolves the explicit tightness conjecture at $\alpha L=1$ in Nguyen et al. (arXiv:2506.23475). For every positive smoothness in the open range and every $K\ge2$, equality is impossible in any finite-dimensional instance with positive initial metric; one iteration does admit equality. At the critical endpoint $\alpha L=2$ the same certificate gives exact sharp suprema for $K\ge2$, although general endpoint attainment remains unresolved. The suprema persist when all three functions are smooth and strongly convex without a common positive lower bound on their strong-convexity moduli. The result concerns arbitrary admissible comparison pairs, which is the quantification of the source conjecture.
+\end{abstract}
+\noindent\textbf{Status.} Unrefereed, AI-assisted research. The proofs have received separate internal model audits and exact arithmetic checks; these do not constitute external peer review or a formal proof certificate. Historical priority is assessed only within the documented search.
+
+\section{Problem and main result}
+
+Consider a composite convex objective $f+g+h$ on $\R^d$, where $f,g:\R^d\to(-\infty,+\infty]$ are proper, closed and convex, and $h:\R^d\to\R$ is convex with an $L$-Lipschitz gradient. The Davis--Yin method avoids a joint proximal solve by separating two proximal evaluations and one gradient evaluation \cite{davis2017}. Its averaged comparison gap is a uniform certificate of how the generated primal and dual averages compare with any admissible reference pair. It is not automatically an objective error, a maximised duality gap, or even nonnegative for every fixed pair. A sharp coefficient may therefore be approached by increasingly extreme instances without being attained by any one finite instance. We fix the ordering called DYS-$gf$ by Nguyen et al. \cite{nguyen2025}. For a step $\alpha>0$ and arbitrary $x_0,u_0\in\R^d$, write
+\begin{align}
+u_k&=\prox_{g^*/\alpha}(u_{k-1}+x_{k-1}/\alpha),\label{eq:dual}\\
+p_k&=x_{k-1}+\alpha(u_{k-1}-u_k),\label{eq:p}\\
+x_k&=\prox_{\alpha f}\bigl(p_k-\alpha u_k-\alpha\nabla h(p_k)\bigr),\qquad k\ge1.\label{eq:primal}
+\end{align}
+Here $g^*$ is the Fenchel conjugate, and our convention is
+\[
+\prox_\phi(v)=\arg\min_z\{\phi(z)+\tfrac12\norm{z-v}^2\}.
+\]
+Let $\bar x=K^{-1}\sum_{k=1}^Kx_k$ and $\bar u=K^{-1}\sum_{k=1}^Ku_k$. For comparison points $x\in\dom f$, $u\in\dom g^*$ define
+\begin{align}
+\mathcal L(x,u)&=f(x)+h(x)+\ip{x}{u}-g^*(u),\nonumber\\
+G_K(x,u)&=\mathcal L(\bar x,u)-\mathcal L(x,\bar u),\label{eq:gap}\\
+D&=\norm{x_0-x}^2+\alpha^2\norm{u_0-u}^2,\nonumber\\
+R_0&=\norm{x_0-x+\alpha(u_0-u)}^2.\label{eq:metrics}
+\end{align}
+All terms in \eqref{eq:gap} are finite: the proximal iterates lie in the relevant domains, which are convex. A comparison pair need not be a saddle pair. This is essential both to the theorem's quantifiers and to its sharpness examples.
+
+\begin{theorem}[Exact constants]\label{thm:main}
+Fix $K\ge1$ and $\theta=\alpha L\in(0,2)$. Every instance of \eqref{eq:dual}--\eqref{eq:primal} and every admissible comparison pair satisfy
+\begin{equation}\label{eq:bound}
+G_K(x,u)\le \frac{R_0}{2\alpha(K+1-\theta)}
+\le \frac{D}{\alpha(K+1-\theta)}.
+\end{equation}
+Both constants are exact:
+\begin{equation}\label{eq:suprema}
+\sup_{D>0}\frac{\alpha G_K}{D}=\frac1{K+1-\theta},
+\qquad
+\sup_{R_0>0}\frac{\alpha G_K}{R_0}=\frac1{2(K+1-\theta)}.
+\end{equation}
+The suprema range over dimensions, functions, initial points and admissible comparison pairs. They are unchanged if dimension is restricted to two, the three functions are required to be finite and nonnegative, and the objective is required to have a unique minimiser and a primal--dual saddle pair.
+\end{theorem}
+
+\begin{theorem}[Attainment]\label{thm:attainment}
+For $0<\theta<2$, each supremum in \eqref{eq:suprema} is attained when $K=1$. If $K\ge2$, no finite-dimensional admissible instance with positive denominator attains either supremum.
+\end{theorem}
+
+\begin{proposition}[Critical endpoint]\label{prop:endpoint}
+Let $\theta=\alpha L=2$ and $K\ge2$. Then every admissible instance and comparison pair satisfy
+\[
+G_K(x,u)\le\frac{R_0}{2\alpha(K-1)}
+\le\frac{D}{\alpha(K-1)},
+\]
+and both coefficients are exact suprema:
+\[
+\sup_{D>0}\frac{\alpha G_K}{D}=\frac1{K-1},\qquad
+\sup_{R_0>0}\frac{\alpha G_K}{R_0}=\frac1{2(K-1)}.
+\]
+The two-dimensional finite nonnegative restriction in Theorem~\ref{thm:main}, and the smooth strongly convex restriction in Corollary~\ref{cor:smooth}, leave these suprema unchanged. General endpoint attainment is not classified. In the strictly convex $f$ subclass, neither positive-denominator bound is attained.
+\end{proposition}
+
+At $\theta=1$, Theorem~\ref{thm:main} resolves the tightness conjecture immediately following Theorem 4.3 of \cite{nguyen2025}. That paper already proves the $D/(\alpha K)$ upper bound. The natural-metric upper bound $R_0/(2\alpha K)$ also appears in the primary author exposition \cite{pedregosa2018}. We claim no new upper bound at that step size. The additional conclusions here are exact sharpness, its non-attainment after two or more steps, the full $K+1-\theta$ formula, and the restricted-class realisations.
+
+\begin{remark}[Interpretation]
+The upper bound applies in particular at saddle comparison pairs. Our examples establish sharpness over \emph{all} admissible comparison pairs. They do not prove that the same constant is sharp under the additional restriction to saddle comparison pairs, for a last-iterate residual, or for an objective error. The construction does not establish an iteration-complexity lower bound over other algorithms. Proposition~\ref{prop:endpoint} is a finite-horizon comparison-gap statement at $\theta=2$; it does not assert convergence of the iterates.
+\end{remark}
+
+\section{Normalisation and an exact certificate}
+
+It suffices to work at $\alpha=1$. Indeed, replace $f,g,h$ by $F=\alpha f$, $G=\alpha g$, $H=\alpha h$ and replace each dual coordinate by $U=\alpha u$. Then
+\[
+G^*(U)=\alpha g^*(U/\alpha),
+\]
+the transformed algorithm has unit step and $\theta$-smooth $H$, and the transformed gap equals $\alpha G_K$. Both metrics in \eqref{eq:metrics} are unchanged. We use the original function and dual notation in these normalised coordinates.
+
+The proof has four stages. First, an exact signed identity decomposes the gap shortfall into convexity deficits, gradient-interpolation deficits, variances and squares. Second, an explicit proximal trajectory approaches equality. Third, the equality conditions show why no finite instance attains the open-range bound after two steps. Finally, smooth approximation transfers the supremum to a strongly convex class. Proposition~4.1 of Nguyen et al.~\cite{nguyen2025} already organises the endpoint upper-bound proof through slacks, squares and variances; the certificate below extends and reorganises that architecture for general $\theta$. Such interpolation certificates are also central in performance-estimation methods \cite{taylor2017,ryu2020}.
+
+Proximal optimality gives
+\begin{equation}\label{eq:subgradients}
+a_k=p_k-u_k-\nabla h(p_k)-x_k\in\partial f(x_k),
+\qquad p_k\in\partial g^*(u_k).
+\end{equation}
+Put
+\[
+b_k=\nabla h(p_k),\quad A_k=a_k+u_k,\quad v_k=A_k+b_k=p_k-x_k,
+\]
+and use bars for arithmetic means. Also put
+\[
+r=x_0+u_0-x-u,\qquad q=K+1-\theta>0,\qquad
+h_b=\nabla h(\bar x),\quad h_x=\nabla h(x).
+\]
+For a vector family $z_1,\ldots,z_K$, let $\Var(z)=K^{-1}\sum_k\norm{z_k-\bar z}^2$.
+
+Here $a_k$ is the primal subgradient supplied by the proximal step; $A_k$ adds the dual iterate; $b_k$ is the smooth gradient; and $v_k$ is the resulting one-step displacement. The vector $r$ is the initial splitting-state error and $q$ is the denominator that remains after completing the final square. The quantities introduced next measure the exact loss in each convexity or interpolation inequality.
+
+Define the following convexity slacks:
+\begin{align}
+J_f&=f(\bar x)-f(x)-\frac1K\sum_k\ip{a_k}{x_k-x},\label{eq:jf}\\
+J_g&=g^*(\bar u)-g^*(u)-\frac1K\sum_k\ip{p_k}{u_k-u},\label{eq:jg}\\
+J_h&=\frac1K\sum_k\bigg[
+h(\bar x)-h(p_k)+\ip{h_b}{p_k-\bar x}
++\frac{\norm{h_b-b_k}^2}{2\theta}\nonumber\\
+&\hspace{31mm}+h(p_k)-h(x)+\ip{b_k}{x-p_k}
++\frac{\norm{h_x-b_k}^2}{2\theta}\bigg].\label{eq:jh}
+\end{align}
+Jensen's inequality and \eqref{eq:subgradients} imply $J_f,J_g\le0$. For a convex $\theta$-smooth function, the standard interpolation inequality is
+\begin{equation}\label{eq:interpolation}
+h(s)\ge h(t)+\ip{\nabla h(t)}{s-t}
++\frac{\norm{\nabla h(s)-\nabla h(t)}^2}{2\theta}.
+\end{equation}
+It follows, for example, by applying smooth descent to the nonnegative convex function $z\mapsto h(z)-h(t)-\ip{\nabla h(t)}{z-t}$ at $s$. Applying \eqref{eq:interpolation} twice to each summand shows $J_h\le0$.
+
+Finally set
+\begin{equation}\label{eq:sh}
+S_h=\frac{\norm{h_b+\theta\bar v-\bar b}^2+
+\norm{h_x-\bar b}^2}{2\theta}.
+\end{equation}
+
+\begin{proposition}[Exact slack identity]\label{prop:identity}
+In the normalised coordinates,
+\begin{align}\label{eq:identity}
+G_K-\frac{\norm r^2}{2q}
+={}&J_f+J_g+J_h-S_h-\frac12\Var(A)\nonumber\\
+&-\left(\frac1\theta-\frac12\right)\Var(b)
+-\frac q2\norm{\bar v-\frac rq}^2.
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Let $y_k=x_k+u_k$. Equations \eqref{eq:p} and \eqref{eq:subgradients} give $y_k=y_{k-1}-v_k$. Substitution of \eqref{eq:jf} and \eqref{eq:jg} into the gap gives
+\begin{equation}\label{eq:gap-reduce}
+G_K=J_f+J_g+\frac1K\sum_k\bigl[
+\ip{v_k}{y_k-x-u}-\ip{b_k}{x_k-x}\bigr]+h(\bar x)-h(x).
+\end{equation}
+Writing $S=\sum_kv_k=K\bar v$, telescoping the squared norms yields
+\begin{align}
+\frac1K\sum_k\ip{v_k}{y_k-x-u}
+&=\frac1K\left(\ip{S}{r}-\frac12\norm S^2-\frac12\sum_k\norm{v_k}^2\right)\nonumber\\
+&=\ip r{\bar v}-\frac{K+1}{2}\norm{\bar v}^2-\frac12\Var(v).\label{eq:energy}
+\end{align}
+Define $\operatorname{Cov}(b,v)=K^{-1}\sum_k\ip{b_k-\bar b}{v_k-\bar v}$. Expanding \eqref{eq:jh} and completing the squares in \eqref{eq:sh} gives the second exact identity
+\begin{align}
+h(\bar x)-h(x)-\frac1K\sum_k\ip{b_k}{x_k-x}
+={}&J_h-S_h+\frac\theta2\norm{\bar v}^2\nonumber\\
+&+\operatorname{Cov}(b,v)-\frac1\theta\Var(b).\label{eq:smooth-reduce}
+\end{align}
+For clarity, its mean terms before completing the squares are
+\[
+\ip{\bar b-h_b}{\bar v}
+-\frac{\norm{h_b-\bar b}^2+\norm{h_x-\bar b}^2}{2\theta}.
+\]
+They equal $\theta\norm{\bar v}^2/2-S_h$. Since $A_k=v_k-b_k$,
+\[
+-\tfrac12\Var(v)+\operatorname{Cov}(b,v)-\tfrac1\theta\Var(b)
+=-\tfrac12\Var(A)-\left(\tfrac1\theta-\tfrac12\right)\Var(b).
+\]
+Combine \eqref{eq:gap-reduce}--\eqref{eq:smooth-reduce} and complete the final square in
+$\ip r{\bar v}-q\norm{\bar v}^2/2$ to obtain \eqref{eq:identity}.
+\end{proof}
+
+Every term on the right of \eqref{eq:identity} is nonpositive when $0<\theta<2$. This proves the first bound in \eqref{eq:bound}; the second follows from
+\[
+2D-R_0=\norm{(x_0-x)-(u_0-u)}^2\ge0
+\]
+in normalised coordinates. This proves the upper-bound part of Theorem~\ref{thm:main}.
+
+\begin{remark}[Why the whole step range requires the stronger certificate]
+For $0\le\theta\le1$, a shorter one-step argument gives
+\[
+\mathcal L(x_k,u)-\mathcal L(x,u_k)
+\le\tfrac12\bigl(\norm{y_{k-1}-x-u}^2-\norm{y_k-x-u}^2
+-(1-\theta)\norm{v_k}^2\bigr).
+\]
+Summation, Jensen's inequality and completion of a square give the same denominator $K+1-\theta$. When $\theta>1$ the coefficient $1-\theta$ changes sign, so that argument does not extend by the same inequality. Proposition~\ref{prop:identity} retains the interpolation information needed in this range.
+\end{remark}
+
+\section{Explicit sharpness examples}
+
+Fix $K\ge1$, $0<\theta<2$ and $M>0$, and let
+\[
+q=K+1-\theta,\qquad w=K+2,\qquad R=w+M+1,\qquad P=(1,M).
+\]
+In $\R^2$ define
+\begin{align}
+f(z)&=w|z_1|+M|z_2|,\nonumber\\
+g(z)&=R\bigl(|z_1-1|+|z_2-M|\bigr),\label{eq:family}\\
+h(z)&=\frac{\theta(Mz_1-z_2)^2}{2(M^2+1)}.\nonumber
+\end{align}
+Take $x_0=u_0=(q/2,0)$ and comparison pair $x=u=(0,0)$. The Hessian of $h$ is $\theta$ times the orthogonal projector onto $(M,-1)$, so its eigenvalues are $0,\theta$ and $\nabla h(P)=0$.
+
+The conjugate and its proximal map are particularly simple:
+\[
+g^*(u)=u_1+Mu_2+\delta_{[-R,R]^2}(u),\qquad
+\prox_{g^*}(v)=\operatorname{proj}_{[-R,R]^2}(v-P).
+\]
+Here $\delta_C$ is zero on $C$ and $+\infty$ elsewhere. The proximal map of $f$ soft-thresholds the two coordinates by $w$ and $M$ respectively. Direct induction therefore gives
+\begin{equation}\label{eq:trajectory}
+p_k=P,\qquad x_k=(0,M),\qquad u_k=(q-k,-M),\qquad 1\le k\le K.
+\end{equation}
+For the first dual update the input is $(q,0)$; after subtracting $P$ it is $(q-1,-M)$. For every later update the same subtraction gives $(q-k,-M)$. These points are strictly inside the dual box. The input to the $f$ proximal map is
+\[
+(k+1-q,2M)=(k-K+\theta,2M).
+\]
+Its first coordinate has absolute value less than $w=K+2$, and its second soft-thresholds to $M$. This verifies \eqref{eq:trajectory} for the entire parameter range, including $K=1$ and $\theta>1$.
+
+Consequently,
+\[
+\bar x=(0,M),\quad \bar u=(q-(K+1)/2,-M),\quad D=q^2/2,\quad R_0=q^2.
+\]
+Evaluation of the four Lagrangian terms yields
+\begin{align}
+G_K&=\frac q2-\frac{\theta}{2(M^2+1)},\label{eq:family-gap}\\
+\frac{G_K}{D}&=\frac1q-\frac{\theta}{q^2(M^2+1)},\qquad
+\frac{G_K}{R_0}=\frac1{2q}-\frac{\theta}{2q^2(M^2+1)}.\label{eq:family-ratio}
+\end{align}
+Letting $M\to\infty$ proves both sharpness assertions. All three functions in \eqref{eq:family} are finite and nonnegative.
+
+These examples also satisfy an existence condition for the underlying optimisation problem. The point $P$ is its unique minimiser, because
+\[
+f(z)+g(z)+h(z)\ge f(P)+\bigl(R-\max\{w,M\}\bigr)\norm{z-P}_1
+\]
+and $R>\max\{w,M\}$. The point $u^*=(-w,-M)$ lies strictly inside the dual box and satisfies $-u^*\in\partial f(P)+\nabla h(P)$ and $u^*\in\partial g(P)$. Thus $(P,u^*)$ is a saddle pair. The lower-bound comparison pair $(0,0)$ is different.
+
+For general $\alpha$, divide the three functions and every dual coordinate by $\alpha$. The trajectory's primal coordinates are unchanged, the smoothness becomes $L=\theta/\alpha$, and \eqref{eq:family-ratio} holds with $G_K$ replaced by $\alpha G_K$.
+
+\begin{remark}[Zero smoothness]
+For $\theta=0$, a convex function with zero gradient Lipschitz constant is affine; the ordinary one-step argument applies without dividing by $\theta$. It gives the Douglas--Rachford constant with denominator $K+1$. Taking $h=0$ in \eqref{eq:family} makes the shortfall in \eqref{eq:family-ratio} exactly zero for every finite $M$. This agrees with the already established Douglas--Rachford sharp constant in \cite{nguyen2025}. Positive smoothness changes the attainment question discontinuously.
+\end{remark}
+
+\begin{proof}[Proof of Proposition~\ref{prop:endpoint}]
+Work first at unit step. At $\theta=2$ and $K\ge2$, the identity in Proposition~\ref{prop:identity} is still well-defined with $q=K-1>0$. The coefficient of $\Var(b)$ becomes zero, while every remaining term on its right remains nonpositive. This proves
+$G_K\le R_0/[2(K-1)]\le D/(K-1)$.
+
+The family \eqref{eq:family} remains admissible. Its primal threshold input has first coordinate $k-K+2$, whose absolute value is strictly less than $w=K+2$, and the dual points remain strictly inside the box. Formula~\eqref{eq:family-gap} becomes
+\[
+G_K=\frac{K-1}{2}-\frac1{M^2+1}.
+\]
+Together with $D=(K-1)^2/2$ and $R_0=(K-1)^2$, letting $M\to\infty$ proves both endpoint suprema and the same finite, nonnegative and solvable restrictions. The approximation in Corollary~\ref{cor:smooth} does not use $\theta<2$; its perturbed smooth term now has Hessian eigenvalues $2\varepsilon$ and $2$, so the smooth strongly convex restriction follows as well.
+
+For the final restricted nonattainment statement, suppose $f$ is strictly convex and equality holds with $R_0>0$. Vanishing of $J_f$ forces every $x_k$ to equal the comparison point $x$, so $\bar x=x$ and $h_b=h_x$. Vanishing of the two squares in $S_h$ gives $h_x=\bar b$ and $h_b+2\bar v=\bar b$, hence $\bar v=0$. The final square then gives $r=(K-1)\bar v=0$, a contradiction. Equality in the $D$ bound would also require positive $R_0$. In the general convex class the vanished $\Var(b)$ coefficient prevents the open-range equality proof from being reused, so no broader endpoint attainment claim is made.
+\end{proof}
+
+\section{Equality is impossible after two or more steps}
+
+\begin{proof}[Proof of Theorem~\ref{thm:attainment} for $K\ge2$]
+Suppose equality holds in the first bound of \eqref{eq:bound}, with $R_0>0$. In \eqref{eq:identity}, every nonpositive term must vanish. Both variance coefficients are strictly positive, so $A_k=A$, $b_k=b$ and $v_k=v=A+b$ are constant. The squares give
+\begin{equation}\label{eq:eq-cond}
+\nabla h(x)=b,\qquad \nabla h(\bar x)=b-\theta v,\qquad r=qv.
+\end{equation}
+Each of the individual smooth interpolation slacks in \eqref{eq:jh} is nonpositive; since their sum is zero, each vanishes. Those involving $p_k$ and $x$ give
+\[
+h(p_k)-\ip b{p_k}=h(x)-\ip b{x}.
+\]
+Substituting this into the other group of equalities and using \eqref{eq:eq-cond} shows that $\ip v{p_k}$ is independent of $k$. Hence
+\begin{equation}\label{eq:orthog}
+\ip v{p_k-p_l}=0\qquad\text{for all }k,l.
+\end{equation}
+
+Monotonicity of the two subdifferentials in \eqref{eq:subgradients} gives
+\[
+\ip{a_k-a_l}{x_k-x_l}\ge0,
+\qquad \ip{u_k-u_l}{p_k-p_l}\ge0.
+\]
+Since $a_k=A-u_k$ and $x_k=p_k-v$, these inner products are negatives of one another; both are therefore zero. For consecutive indices set $\delta p=p_k-p_{k+1}$ and $\delta u=u_k-u_{k+1}$. The relation $y_{k+1}=y_k-v$ gives $v=\delta p+\delta u$. By \eqref{eq:orthog},
+\[
+0=\ip v{\delta p}=\norm{\delta p}^2+\ip{\delta u}{\delta p}
+=\norm{\delta p}^2.
+\]
+All $p_k$ equal one point $P$ and all $x_k$ equal $X=P-v$. Also $a_{k+1}=a_k+v$.
+
+With the primal iterates equal, $J_f=0$ implies equality in each of its subgradient comparisons:
+\[
+f(X)-f(x)=\ip{a_k}{X-x}\qquad\text{for every }k.
+\]
+There are at least two indices, so subtraction gives $\ip v{X-x}=0$. On the other hand, gradient cocoercivity, obtained by adding the two orientations of \eqref{eq:interpolation}, and \eqref{eq:eq-cond} imply
+\[
+\ip{\theta v}{x-X}\ge\frac1\theta\norm{\theta v}^2
+=\theta\norm v^2.
+\]
+It follows that $v=0$ and then $r=0$, contradicting $R_0>0$. Equality in the $D$ bound would force equality in the $R_0$ bound and $R_0=2D>0$, and is therefore also impossible.
+\end{proof}
+
+For $K=1$ equality can occur. Put $q=2-\theta>0$, $d=\theta-1$, and $d_+=\max\{d,0\}$. In one dimension take
+\[
+f(t)=\max\{0,dt+d_+\},\qquad g(t)=4|t|,\qquad h(t)=\tfrac\theta2t^2,
+\]
+with $x_0=u_0=q/2$ and comparison $x=u=0$. The dual update gives $u_1=q$, $p_1=0$. Since $d\in\partial f(-1)$ and $q+d=1$, proximal optimality gives $x_1=-1$. Moreover $g^*(0)=g^*(q)=0$, and
+\[
+G_1=f(-1)-f(0)+\tfrac\theta2=-d+\tfrac\theta2=\tfrac q2.
+\]
+Thus $D=q^2/2$, $R_0=q^2$, and both bounds are attained. All functions are finite and nonnegative. The slope bound $|d|<1$ and the coefficient 4 in $g$ imply that zero is the unique primal minimiser and a saddle pair exists. This completes the proof of Theorem~\ref{thm:attainment}.
+
+\section{Smooth strongly convex approximations}
+
+\begin{corollary}\label{cor:smooth}
+For fixed $K\ge1$ and $0<\theta<2$, both suprema in \eqref{eq:suprema} remain unchanged when $f,g,h$ must all be finite, nonnegative, $C^\infty$ and strongly convex. There is no imposed common positive lower bound on their strong-convexity moduli. The gradient Lipschitz constant of $h$ can remain exactly $L$.
+\end{corollary}
+
+\begin{proof}
+Work at unit step and fix a finite member of \eqref{eq:family}. For $0<\varepsilon<1$, set $\phi_\varepsilon(t)=\sqrt{t^2+\varepsilon^2}$ and define
+\begin{align*}
+f_\varepsilon(z)&=w\phi_\varepsilon(z_1)+M\phi_\varepsilon(z_2)+\tfrac\varepsilon2\norm z^2,\\
+g_\varepsilon(z)&=R\bigl(\phi_\varepsilon(z_1-1)+\phi_\varepsilon(z_2-M)\bigr)
++\tfrac\varepsilon2\norm{z-P}^2,\\
+h_\varepsilon(z)&=(1-\varepsilon)h(z)+\tfrac{\varepsilon\theta}{2}\norm z^2.
+\end{align*}
+The first two functions are at least $\varepsilon$-strongly convex; the Hessian eigenvalues of the third are $\varepsilon\theta$ and $\theta$. All are nonnegative and smooth.
+
+Since $0\le\phi_\varepsilon(t)-|t|\le\varepsilon$, the first two functions converge locally uniformly to $f,g$. A direct proximal estimate makes the trajectory limit explicit. If $z=\prox_f(v)$ and $z_\varepsilon=\prox_{f_\varepsilon}(v)$, the unit strong convexity of the unperturbed proximal objective and $f_\varepsilon\ge f$ imply
+\[
+\norm{z_\varepsilon-z}^2\le2\bigl(f_\varepsilon(z)-f(z)\bigr)
+\le2(w+M)\varepsilon+\varepsilon\norm z^2.
+\]
+For $g_\varepsilon$ the analogous bound is $4R\varepsilon+\varepsilon\norm{z-P}^2$. Moreau's identity transfers proximal convergence to the conjugates. Nonexpansiveness of each proximal map and local uniform convergence of the gradients then give convergence of all iterates by induction over the fixed finite horizon.
+
+It remains to control conjugate values in the gap. For every $u\in[-R,R]^2$,
+\[
+\ip P{u}-2R\varepsilon\le g_\varepsilon^*(u)\le\ip P{u}.
+\]
+The upper bound follows from $g_\varepsilon\ge g$ and the lower one by evaluating the conjugate supremum at $P$. The limiting comparison dual point and the limiting averaged dual iterate lie strictly inside the box. The same bounds therefore apply to the nearby perturbed average for sufficiently small $\varepsilon$. All gap terms converge to \eqref{eq:family-gap}.
+
+Choose first $M$ large enough to achieve a prescribed shortfall in \eqref{eq:family-ratio}, and then $\varepsilon$ small enough to preserve it to any required accuracy. This proves the corollary. The perturbed objectives are coercive and strongly convex and have saddle pairs. Their strong-convexity moduli may tend to zero; the argument makes no claim for a uniformly conditioned class.
+\end{proof}
+
+\section{Verification, positioning and limits}
+
+In the strongly convex subclass of Corollary~\ref{cor:smooth}, equality is impossible even when $K=1$. In fact, strict convexity of $f$ and $J_f=0$ force every $x_k=x$. Then $h_b=h_x$; the vanishing variances and $S_h=0$ force $\bar v=0$, and the final square forces $r=0$. This contradicts positive initial metric. The one-step attainment in Theorem~\ref{thm:attainment} concerns the larger convex class.
+
+The public standard-library Python replay applies the actual shifted box projections, soft-threshold maps and gradients using exact rational arithmetic. It checks 720 family parameter combinations, comprising 600 open-range and 120 zero-smoothness consistency cases, with 3960 splitting iterations and 7920 individual proximal evaluations in total. It also checks the algebraic certificate in 300 exact rational cases, using 60 arrays across five positive $\theta$ values, and checks six one-step equality cases through $\theta=1.99$. The endpoint extension adds 36 lower-family and 45 identity cases. Every acceptance gate raises an explicit exception and remains active under optimized Python; deliberate negative controls are required to fail in both ordinary and optimized modes. From the repository root, \texttt{python3 code/replay.py} regenerates the receipts. The array checks test algebra, not whether arbitrary arrays admit convex interpolation. The proof of the inequalities and their quantifiers is the analytic argument above.
+
+The bounded search, last updated 20 October 2026, included the source conjecture, exact denominator variants, attainment terminology, and three-operator splitting aliases. The source's HTML identifies v2 as 12 September 2025 but displays an internal manuscript date of 24 August 2026; the author-hosted PDF is dated 28 September 2025. The audit preserves that discrepancy. The inspected versions retain the conjecture. No earlier resolution or matching full-step sharpness and non-attainment theorem was located, but this search cannot establish priority by itself.
+
+Indexing and gap definitions matter when comparing earlier rates. For example, \cite{pedregosa2018} translates its smooth function to our $h$ and its two proximal functions to our $f,g$; its endpoint theorem gives the same natural-metric upper bound. Table~\ref{tab:prior} records the most relevant comparison. Write $\bar z_{a:b}=(b-a+1)^{-1}\sum_{k=a}^b z_k$.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Comparison after translating function names to the present convention. Each listed gap allows arbitrary admissible comparison pairs.}\label{tab:prior}
+\begin{tabular}{@{}p{33mm}p{42mm}p{76mm}@{}}
+\toprule
+Result & Averaged pair & Initial metric and scope\\
+\midrule
+Theorem~\ref{thm:main} & $(\bar x_{1:K},\bar u_{1:K})$ & Exact $R_0/[2\alpha(K+1-\theta)]$ and $D/[\alpha(K+1-\theta)]$, $0<\theta<2$.\\[5pt]
+Proposition~\ref{prop:endpoint} & $(\bar x_{1:K},\bar u_{1:K})$ & Exact endpoint suprema with denominator $K-1$ at $\theta=2$, $K\ge2$; no general attainment classification.\\[5pt]
+Nguyen et al.\ \cite{nguyen2025}, Theorem 4.2 & $(\bar x_{1:K},\bar u_{1:K})$ & Upper bound $D/(\alpha K)$ at $\theta=1$; the subsequent sharpness conjecture is the direct target.\\[5pt]
+Pedregosa \cite{pedregosa2018}, Theorem 1 & $(\bar x_{1:K},\bar u_{1:K})$ & Upper bound $R_0/(2\alpha K)$ at $\theta=1$; this endpoint bound is already known.\\[5pt]
+Pedregosa--Gidel \cite{pedregosa2018adaptive}, fixed-step Algorithm 1 and Theorem 2 & $(\bar x_{1:K},\bar u_{2:K+1})$ & Their initial $(z_0,u_0)$ maps to $(p_1,u_1)$; the numerator is $\norm{p_1-x}^2+\alpha^2\norm{u_1-u}^2$. The dual pairing and initial metric differ.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the last row the fixed-step correspondence is $z_t=p_k$, their $u_t=u_k$, and their $x_{t+1}=x_k$, with $k=t+1$. Their next dual update is therefore $u_{k+1}$. This prevents an apparent factor-of-two comparison from conflating different finite-horizon assertions. The table is a mapping of the inspected statements, not a claim that every related earlier inequality has been exhausted.
+
+The explicit family sends $M$ to infinity while preserving its initial metric. Its iterates stay at one primal point while the dual moves, and its only nonzero certificate penalty is $S_h=\theta/[2(M^2+1)]$. For any prescribed normalised shortfall $\eta>0$, a positive $M$ satisfying $M^2+1\ge\theta/(q^2\eta)$ is sufficient. This supplies a concrete replacement for a search for an equality-achieving finite example, which Theorem~\ref{thm:attainment} proves cannot succeed after two steps. The result is relevant to exact performance estimation, while the asymptotic order remains $O(1/K)$. Both initial metrics depend on the step, so optimising the displayed denominator alone does not identify a generally optimal practical step. The construction does not offer a difficult data set of fixed scale or a new algorithm.
+
+\section*{Declarations and availability}
+
+\textbf{Authorship and AI assistance.} This anonymous scholarly output was produced by AI research agents under human direction. The public record attributes no human author. Separate internal model audits are assurance evidence, not external peer review or formal verification.
+
+\textbf{Data, code and materials.} The accompanying public repository and archival deposit contain this source, fail-closed exact replay code, generated receipts, a public claim map and a bounded source-access record. The manuscript is authoritative for the proof. Finite arithmetic checks have only the limited scope stated above.
+
+\textbf{Ethics.} This is theoretical mathematical research involving no human participants, animals or personal data; institutional ethics approval was therefore not applicable.
+
+\textbf{Funding and competing interests.} No funding or competing-interest information was supplied. No claim beyond that recorded absence is made.
+
+\begin{thebibliography}{99}
+\bibitem{davis2017} Davis, D., \& Yin, W. (2017). A three-operator splitting scheme and its optimization applications. \emph{Set-Valued and Variational Analysis, 25}, 829--858. \url{https://doi.org/10.1007/s11228-017-0421-z}. Author preprint: \url{https://arxiv.org/abs/1504.01032}.
+\bibitem{nguyen2025} Nguyen, E. D. H., Suh, J. J., Jiang, X., \& Ma, S. (2025). \emph{Exact worst-case convergence rates for Douglas--Rachford and Davis--Yin splitting methods} [Preprint]. arXiv. \url{https://arxiv.org/abs/2506.23475}. Inspected HTML: \url{https://arxiv.org/html/2506.23475v2}; author copy: \url{https://jiangxjames.github.io/publications/swap-dys.pdf}.
+\bibitem{pedregosa2018} Pedregosa, F. (2018, September 6). \emph{Three operator splitting}. Author exposition. \url{https://fa.bianp.net/blog/2018/tos/}.
+\bibitem{pedregosa2018adaptive} Pedregosa, F., \& Gidel, G. (2018). Adaptive three operator splitting. In J. Dy \& A. Krause (Eds.), \emph{Proceedings of the 35th International Conference on Machine Learning} (Proceedings of Machine Learning Research, Vol. 80, pp. 4085--4094). PMLR. \url{https://proceedings.mlr.press/v80/pedregosa18a.html}.
+\bibitem{taylor2017} Taylor, A. B., Hendrickx, J. M., \& Glineur, F. (2017). Smooth strongly convex interpolation and exact worst-case performance of first-order methods. \emph{Mathematical Programming, 161}, 307--345. \url{https://doi.org/10.1007/s10107-016-1009-3}. Preprint: \url{https://arxiv.org/abs/1502.05666}.
+\bibitem{ryu2020} Ryu, E. K., Taylor, A. B., Bergeling, C., \& Giselsson, P. (2020). Operator splitting performance estimation: Tight contraction factors and optimal parameter selection. \emph{SIAM Journal on Optimization, 30}(3), 2251--2271. \url{https://doi.org/10.1137/19M1304854}. Preprint: \url{https://arxiv.org/abs/1812.00146}.
+\end{thebibliography}
+\end{document}

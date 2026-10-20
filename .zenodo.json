@@ -1,0 +1,14 @@
+{
+  "title": "Exact finite-horizon gap constants and non-attainment for Davis-Yin splitting",
+  "publication_date": "2026-10-20",
+  "description": "Exact averaged comparison-gap constants for Davis-Yin splitting, including sharp two-dimensional families, an open-range attainment classification and a critical-endpoint extension. Written proofs and fail-closed exact checks are included. AI-assisted work; external human peer review and proof-assistant formalisation are not claimed.",
+  "access_right": "open",
+  "creators": [{"name": "Anonymous"}],
+  "related_identifiers": [{"identifier": "https://github.com/ipitchford/davis-yin-gap-sharpness", "relation": "isSupplementTo", "scheme": "url"}],
+  "version": "1.0.0-candidate",
+  "doi": "10.5281/zenodo.23505130",
+  "license": "cc-zero",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "prereserve_doi": {"doi": "10.5281/zenodo.23505130", "recid": 23505130}
+}

@@ -1,0 +1,8 @@
+Bounded replay environment
+Python: 3.14.7
+Dependencies: Python standard library only
+
+Run: python3 -B code/replay.py
+The wrapper launches ordinary and optimized child interpreters, validates their
+optimization flags, compares semantic receipts and requires deliberate
+VerificationError failures. PDF source: paper.tex; compiler used: pdfLaTeX via latexmk.

@@ -1,0 +1,14 @@
+{
+  "ordinary_replay": "passed",
+  "optimized_replay": "passed",
+  "ordinary_negative_controls": [
+    "trajectory_failed_as_required",
+    "constant_failed_as_required"
+  ],
+  "optimized_negative_controls": [
+    "trajectory_failed_as_required",
+    "constant_failed_as_required"
+  ],
+  "semantic_receipts_equal_ignoring_optimization_flag": true,
+  "scope": "exact arithmetic checks of formulas and explicit trajectories; analytic proof remains controlling"
+}
